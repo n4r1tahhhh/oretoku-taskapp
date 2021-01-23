@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :update, :destroy]
+  before_action :set_user, only: %i[show update destroy]
 
   # GET /users
   def show
@@ -32,15 +34,16 @@ class UsersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    # current_user実装後、@userをcurrent_userに置き換えるので、このメソッドを消す
-    def set_user
-      # 消すまではとりあえずfirstで実装する
-      @user = User.first
-    end
 
-    # Only allow a list of trusted parameters through.
-    def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  # current_user実装後、@userをcurrent_userに置き換えるので、このメソッドを消す
+  def set_user
+    # 消すまではとりあえずfirstで実装する
+    @user = User.first
+  end
+
+  # Only allow a list of trusted parameters through.
+  def user_params
+    params.require(:user).permit(:email, :password, :password_confirmation)
+  end
 end

@@ -1,0 +1,20 @@
+# 日本語でのコメントを許可
+AsciiComments:
+  Enabled: false
+
+BlockLength:
+  Enabled: false
+
+# missing top-level class documentation comment が出ないように
+Documentation:
+  Enabled: false
+
+# 複数行に渡ってメソッドチェーンを使う時のインデントは開発側に任せる
+MultilineMethodCallIndentation:
+  Enabled: false
+
+AllCops:
+  Exclude:
+    - db/migrate/*
+    - db/schema.rb
+    - bin/bundle
