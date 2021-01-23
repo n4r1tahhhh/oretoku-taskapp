@@ -2,13 +2,6 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :destroy]
 
   # GET /users
-  def index
-    @users = User.all
-
-    render json: @users
-  end
-
-  # GET /users/1
   def show
     render json: @user
   end
@@ -24,7 +17,7 @@ class UsersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /users/1
+  # PATCH/PUT /users
   def update
     if @user.update(user_params)
       render json: @user
@@ -33,15 +26,17 @@ class UsersController < ApplicationController
     end
   end
 
-  # DELETE /users/1
+  # DELETE /users
   def destroy
     @user.destroy
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    # current_user実装後、@userをcurrent_userに置き換えるので、このメソッドを消す
     def set_user
-      @user = User.find(params[:id])
+      # 消すまではとりあえずfirstで実装する
+      @user = User.first
     end
 
     # Only allow a list of trusted parameters through.
