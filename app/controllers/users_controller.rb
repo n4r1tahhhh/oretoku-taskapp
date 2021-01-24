@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[show update destroy]
+  include JwtAuthenticator
+  before_action :jwt_authenticate, only: %i[show update destroy]
 
   # GET /users
   def show
-    render json: @user
+    render json: @current_user
   end
 
   # POST /users
@@ -21,26 +22,19 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users
   def update
-    if @user.update(user_params)
-      render json: @user
+    if @current_user.update(user_params)
+      render json: @current_user
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: @current_user.errors, status: :unprocessable_entity
     end
   end
 
   # DELETE /users
   def destroy
-    @user.destroy
+    @current_user.destroy
   end
 
   private
-
-  # Use callbacks to share common setup or constraints between actions.
-  # current_user実装後、@userをcurrent_userに置き換えるので、このメソッドを消す
-  def set_user
-    # 消すまではとりあえずfirstで実装する
-    @user = User.first
-  end
 
   # Only allow a list of trusted parameters through.
   def user_params
